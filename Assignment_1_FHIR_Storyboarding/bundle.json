@@ -1,0 +1,288 @@
+{
+  "resourceType": "Bundle",
+  "type": "transaction",
+  "entry": [
+    {
+      "fullUrl": "urn:uuid:anshul-001",
+      "resource": {
+        "resourceType": "Patient",
+        "id": "anshul-001",
+        "name": [
+          {
+            "use": "official",
+            "family": "Anshul",
+            "given": ["Anshul"]
+          }
+        ],
+        "gender": "male",
+        "birthDate": "1974-05-15",
+        "address": [
+          {
+            "use": "home",
+            "line": ["123 Health St"],
+            "city": "Health City",
+            "state": "Health State",
+            "postalCode": "12345",
+            "country": "Country"
+          }
+        ],
+        "communication": [
+          {
+            "language": {
+              "coding": [
+                {
+                  "system": "urn:ietf:bcp:47",
+                  "code": "en",
+                  "display": "English"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "request": {
+        "method": "POST",
+        "url": "Patient"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:device-001",
+      "resource": {
+        "resourceType": "Device",
+        "id": "device-001",
+        "status": "active",
+        "type": {
+          "coding": [
+            {
+              "system": "http://hl7.org/fhir/device-code",
+              "code": "smtch",
+              "display": "Smartwatch"
+            }
+          ]
+        },
+        "manufacturer": "HealthTech",
+        "model": "SmartBP-2024",
+        "udiCarrier": "0123456789",
+        "patient": {
+          "reference": "urn:uuid:anshul-001"
+        }
+      },
+      "request": {
+        "method": "POST",
+        "url": "Device"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:observation-001",
+      "resource": {
+        "resourceType": "Observation",
+        "id": "observation-001",
+        "status": "final",
+        "subject": {
+          "reference": "urn:uuid:anshul-001"
+        },
+        "code": {
+          "coding": [
+            {
+              "system": "http://loinc.org",
+              "code": "85354-9",
+              "display": "Blood Pressure"
+            }
+          ]
+        },
+        "valueQuantity": {
+          "value": 130,
+          "unit": "mmHg",
+          "system": "http://unitsofmeasure.org",
+          "code": "mmHg"
+        },
+        "effectiveDateTime": "2024-09-28T10:00:00Z"
+      },
+      "request": {
+        "method": "POST",
+        "url": "Observation"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:risk-assessment-001",
+      "resource": {
+        "resourceType": "RiskAssessment",
+        "id": "risk-assessment-001",
+        "subject": {
+          "reference": "urn:uuid:anshul-001"
+        },
+        "status": "final",
+        "method": {
+          "coding": [
+            {
+              "system": "http://hl7.org/fhir/riskassessment-method",
+              "code": "risk-assessment",
+              "display": "Risk Assessment"
+            }
+          ]
+        },
+        "prediction": [
+          {
+            "outcome": {
+              "coding": [
+                {
+                  "system": "http://snomed.info/sct",
+                  "code": "431855005",
+                  "display": "Hypertensive Crisis"
+                }
+              ]
+            },
+            "probabilityDecimal": 0.85
+          }
+        ]
+      },
+      "request": {
+        "method": "POST",
+        "url": "RiskAssessment"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:physician-001",
+      "resource": {
+        "resourceType": "Practitioner",
+        "id": "physician-001",
+        "name": [
+          {
+            "use": "official",
+            "family": "Doe",
+            "given": ["John"]
+          }
+        ],
+        "gender": "male",
+        "birthDate": "1980-01-01",
+        "telecom": [
+          {
+            "system": "phone",
+            "value": "+123456789",
+            "use": "work"
+          }
+        ]
+      },
+      "request": {
+        "method": "POST",
+        "url": "Practitioner"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:communication-001",
+      "resource": {
+        "resourceType": "Communication",
+        "id": "communication-001",
+        "status": "completed",
+        "subject": {
+          "reference": "urn:uuid:anshul-001"
+        },
+        "recipient": [
+          {
+            "reference": "urn:uuid:physician-001"
+          }
+        ],
+        "sent": "2024-09-28T11:00:00Z",
+        "payload": [
+          {
+            "contentString": "Alert: Blood Pressure spike detected for Anshul."
+          }
+        ]
+      },
+      "request": {
+        "method": "POST",
+        "url": "Communication"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:goal-001",
+      "resource": {
+        "resourceType": "Goal",
+        "id": "goal-001",
+        "subject": {
+          "reference": "urn:uuid:anshul-001"
+        },
+        "status": "in-progress",
+        "description": {
+          "coding": [
+            {
+              "system": "http://hl7.org/fhir/goal-status",
+              "code": "active",
+              "display": "Manage Blood Pressure"
+            }
+          ],
+          "text": "Maintain blood pressure below 120/80 mmHg."
+        }
+      },
+      "request": {
+        "method": "POST",
+        "url": "Goal"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:care-plan-001",
+      "resource": {
+        "resourceType": "CarePlan",
+        "id": "care-plan-001",
+        "subject": {
+          "reference": "urn:uuid:anshul-001"
+        },
+        "status": "active",
+        "goal": [
+          {
+            "reference": "urn:uuid:goal-001"
+          }
+        ],
+        "activity": [
+          {
+            "detail": {
+              "code": {
+                "coding": [
+                  {
+                    "system": "http://hl7.org/fhir/care-plan-activity-code",
+                    "code": "dietary",
+                    "display": "Dietary Changes"
+                  }
+                ]
+              },
+              "status": "in-progress"
+            }
+          }
+        ]
+      },
+      "request": {
+        "method": "POST",
+        "url": "CarePlan"
+      }
+    },
+    {
+      "fullUrl": "urn:uuid:medication-request-001",
+      "resource": {
+        "resourceType": "MedicationRequest",
+        "id": "medication-request-001",
+        "status": "active",
+        "medicationCodeableConcept": {
+          "coding": [
+            {
+              "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+              "code": "123456",
+              "display": "Amlodipine"
+            }
+          ]
+        },
+        "subject": {
+          "reference": "urn:uuid:anshul-001"
+        },
+        "dosageInstruction": [
+          {
+            "text": "Take one tablet daily."
+          }
+        ]
+      },
+      "request": {
+        "method": "POST",
+        "url": "MedicationRequest"
+      }
+    }
+  ]
+}
